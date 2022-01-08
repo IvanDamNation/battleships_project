@@ -19,7 +19,7 @@ class WrongShipPlacement(BoardException):
     pass
 
 
-# base object
+# Base object
 class Dot:
     def __init__(self, x_coord, y_coord):
         self.x = x_coord
@@ -59,3 +59,34 @@ class Ship:
 
     def get_hit(self, shot):
         return shot in self.ship_dots
+
+
+# Object for board presentation
+class GameField:
+    def __init__(self, hidden=False, width=6):
+        self.width = width
+        self.hidden = hidden
+
+        self.destroyed = 0
+
+        self.field_itself = [[' '] * width for _ in range(width)]
+
+        self.used_dots = []
+        self.ships_on_field = []
+
+    def __str__(self):
+        pres = ''
+        pres += '\t| ' + \
+                ' | '.join(map(str, range(self.width))) + ' |\n'
+        pres += '\t' + '----' * self.width + ' \n'
+
+        for col, row in enumerate(self.field_itself):
+            pres += f'{col + 1}\t| ' + ' | '.join(row) + ' |\n'
+
+        if self.hidden:
+            pres = pres.replace('O', ' ')
+        return pres
+
+    def out_of_border(self, dot):
+        return not ((0 <= dot.x < self.width) and
+                    (0 <= dot.y < self.width))
