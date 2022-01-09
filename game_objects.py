@@ -73,7 +73,7 @@ class GameField:
         self.width = width
         self.hidden = hidden
 
-        self.destroyed = 0
+        self.destroyed = 0  # Ship counter
 
         self.field_itself = [[' '] * width for _ in range(width)]
 
