@@ -35,6 +35,12 @@ class Dot:
 # Constructing ship with dot objects
 class Ship:
     def __init__(self, bow, length, orientation):
+        """
+        Initializing
+        :param bow: "pointer" dot (zero-index dot)
+        :param length: amount of dots in ship
+        :param orientation: 0 for horizontal, 1 for vertical
+        """
         self.bow = bow
         self.length = length
         self.orient = orientation
