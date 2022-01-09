@@ -1,4 +1,4 @@
-# file contains objects definition for Battleships game
+# File contains objects definition for Battleships game
 
 # Exceptions section
 class BoardException(Exception):
@@ -87,7 +87,7 @@ class GameField:
         pres += '\t' + '----' * self.width + ' \n'
 
         for col, row in enumerate(self.field_itself):
-            pres += f'{col + 1}\t| ' + ' | '.join(row) + ' |\n'
+            pres += f'{col}\t| ' + ' | '.join(row) + ' |\n'
 
         if self.hidden:
             pres = pres.replace('O', ' ')
@@ -96,3 +96,29 @@ class GameField:
     def out_of_border(self, dot):
         return not ((0 <= dot.x < self.width) and
                     (0 <= dot.y < self.width))
+
+    def occupy_dots(self, ship, verbose=False):
+        adjacent = [(-1, -1), (-1, 0), (-1, 1),
+                    (0, -1), (0, 0), (0, 1),
+                    (1, -1), (1, 0), (1, 1)]
+
+        for dot in ship.ship_dots:
+            for delta_x, delta_y in adjacent:
+                new_dot = Dot(dot.x + delta_x, dot.y + delta_y)
+                if not (self.out_of_border(new_dot)) and \
+                        new_dot not in self.used_dots:
+                    if verbose:
+                        self.field_itself[new_dot.x][new_dot.y] = '.'
+
+                    self.used_dots.append(new_dot)
+
+    def add_ship(self, ship):
+        for dot in ship.ship_dots:
+            if self.out_of_border(dot) or dot in self.used_dots:
+                raise WrongShipPlacement
+        for dot in ship.ship_dots:
+            self.field_itself[dot.x][dot.y] = 'O'
+            self.used_dots.append(dot)
+
+        self.ships_on_field.append(ship)
+        self.occupy_dots(ship)
