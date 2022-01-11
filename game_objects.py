@@ -1,5 +1,8 @@
 # File contains objects definition for Battleships game
 
+from random import randint  # For AI moves
+
+
 # Exceptions section
 class BoardException(Exception):
     pass
@@ -175,3 +178,29 @@ class PlayerMain:
                 acceptable = True
 
         return new_shot
+
+
+class Human(PlayerMain):  # TODO Make width changeable
+    def get_coord(self, width=6):
+        coord_x = coord_y = None
+        acceptable = False
+
+        while not acceptable:
+            try:
+                coord_x = int(input('Input X coordinate: '))
+                coord_y = int(input('Input Y coordinate: '))
+            except ValueError:
+                print('Error! Check your input!')
+            else:
+                acceptable = True
+
+        return Dot(coord_x, coord_y)
+
+
+class AI(PlayerMain):  # TODO Make width changeable
+    def get_coord(self, width=6):
+        dot = Dot(randint(0, width), randint(0, width))
+        print(f'Computer move: x={dot.x} y={dot.y}', end='')
+        input('Press Enter.')
+
+        return dot
