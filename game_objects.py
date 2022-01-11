@@ -5,12 +5,12 @@ class BoardException(Exception):
     pass
 
 
-class OutOfRangeException(BoardException):
+class OutOfRange(BoardException):
     def __str__(self):
         return 'Coordinates out of board range.'
 
 
-class UsedCoordinatesException(BoardException):
+class UsedCoordinates(BoardException):
     def __str__(self):
         return 'You already shoot on this coordinate.'
 
@@ -122,3 +122,32 @@ class GameField:
 
         self.ships_on_field.append(ship)
         self.occupy_dots(ship)
+
+    def fire(self, dot):
+        if self.out_of_border(dot):
+            raise OutOfRange()
+
+        if dot in self.used_dots:
+            raise UsedCoordinates()
+
+        self.used_dots.append(dot)
+
+        for ship in self.ships_on_field:
+            if ship.get_hit(dot):
+                ship.hp -= 1
+                self.field_itself[dot.x][dot.y] = 'X'
+                if ship.hp == 0:
+                    self.destroyed += 1
+                    self.occupy_dots(ship, verbose=True)
+                    print('Ship destroyed!')
+                    return False
+                else:
+                    print('Ship get hit!')
+                    return True
+
+        self.field_itself[dot.x][dot.y] = '.'
+        print('Missed.')
+        return False
+
+    def clean_used_dots(self):
+        self.used_dots = []
