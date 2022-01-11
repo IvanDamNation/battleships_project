@@ -151,3 +151,27 @@ class GameField:
 
     def clean_used_dots(self):
         self.used_dots = []
+
+
+class PlayerMain:
+    def __init__(self, player_board, enemy_board):
+        self.board = player_board
+        self.enemy = enemy_board
+
+    def get_coord(self):
+        raise NotImplementedError()
+
+    def move(self):
+        acceptable = False
+        new_shot = None
+
+        while not acceptable:
+            try:
+                target = self.get_coord()
+                new_shot = self.enemy.fire(target)
+            except BoardException as error:
+                print(error)
+            else:
+                acceptable = True
+
+        return new_shot
