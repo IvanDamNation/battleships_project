@@ -111,7 +111,7 @@ class GameField:
                 if not (self.out_of_border(new_dot)) and \
                         new_dot not in self.used_dots:
                     if verbose:
-                        self.field_itself[new_dot.x][new_dot.y] = '.'
+                        self.field_itself[new_dot.y][new_dot.x] = '.'
 
                     self.used_dots.append(new_dot)
 
@@ -120,7 +120,7 @@ class GameField:
             if self.out_of_border(dot) or dot in self.used_dots:
                 raise WrongShipPlacement
         for dot in ship.ship_dots:
-            self.field_itself[dot.x][dot.y] = 'O'
+            self.field_itself[dot.y][dot.x] = 'O'
             self.used_dots.append(dot)
 
         self.ships_on_field.append(ship)
@@ -138,7 +138,7 @@ class GameField:
         for ship in self.ships_on_field:
             if ship.get_hit(dot):
                 ship.hp -= 1
-                self.field_itself[dot.x][dot.y] = 'X'
+                self.field_itself[dot.y][dot.x] = 'X'
                 if ship.hp == 0:
                     self.destroyed += 1
                     self.occupy_dots(ship, verbose=True)
@@ -148,7 +148,7 @@ class GameField:
                     print('Ship get hit!')
                     return True
 
-        self.field_itself[dot.x][dot.y] = '.'
+        self.field_itself[dot.y][dot.x] = '.'
         print('Missed.')
         return False
 
