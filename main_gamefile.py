@@ -16,7 +16,7 @@ from random import randint
 
 from game_objects import BoardException, OutOfRange, UsedCoordinates, \
     WrongShipPlacement
-from game_objects import Dot, Ship, GameField, PlayerMain, Human, AI
+from game_objects import Dot, Ship, GameField, Human, AI
 
 
 class MainGameObject:
