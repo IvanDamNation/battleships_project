@@ -198,7 +198,7 @@ class Human(PlayerMain):  # TODO Make width changeable
 
 
 class AI(PlayerMain):  # TODO Make width changeable
-    def get_coord(self, width=6):
+    def get_coord(self, width=5):
         dot = Dot(randint(0, width), randint(0, width))
         print(f'Computer move: x={dot.x} y={dot.y}', end='')
         input('Press Enter.')

@@ -18,6 +18,9 @@ from game_objects import BoardException, OutOfRange, UsedCoordinates, \
     WrongShipPlacement
 from game_objects import Dot, Ship, GameField, Human, AI
 
+# For more options info look in "options.py" file
+# from options import WIDTH, SHIP_LIST  # TODO Uncomment in future
+
 
 class MainGameObject:
     def __init__(self, width=6):
@@ -66,8 +69,42 @@ class MainGameObject:
         print('--------------------------------------')
         print('Good luck!')
 
+    def party_cycle(self):
+        move = 0
+        while True:
+            print('-' * 20)
+            print('User board.')
+            print(self.user.board)
+            print('-' * 20)
+            print('AI board.')
+            print(self.ai.board)
+            print('-' * 20)
+            if move % 2 == 0:
+                print('User move:')
+                new_shot = self.user.move()
+            else:
+                print('Computer move:')
+                new_shot = self.ai.move()
+            if not new_shot:
+                move -= 1  # For same player move when get hit
+
+            if self.ai.board.destroyed == 7:
+                print('-' * 20)
+                print('You win!')
+                break
+
+            if self.user.board.destroyed == 7:
+                print('-' * 20)
+                print('Computer win!')
+                break
+
+    def open_game(self):
+        self.rules()
+        self.party_cycle()
+
 
 # Starting section
 if __name__ == '__main__':
     game = MainGameObject()
+    game.open_game()
     # print(game.make_board_forced())
