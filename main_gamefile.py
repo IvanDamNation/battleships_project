@@ -14,17 +14,28 @@
 # Import section
 from random import randint
 
-from game_objects import BoardException, OutOfRange, UsedCoordinates, \
-    WrongShipPlacement
+from game_objects import WrongShipPlacement
 from game_objects import Dot, Ship, GameField, Human, AI
 
 # For more options info look in "options.py" file
-# from options import WIDTH, SHIP_LIST  # TODO Uncomment in future
+from options import *
+
+
+def rules():
+    print('Welcome to the Battleships game!')
+    print('--------------------------------------')
+    print('The rules are standard.')
+    print('Input X and Y coordinates for shoot.')
+    print("Try to hit all opponent's ships on map")
+    print('before opponent destroy all yours.')
+    print('Your opponent will be simple AI.')
+    print('--------------------------------------')
+    print('Good luck!')
 
 
 class MainGameObject:
-    def __init__(self, width=6):
-        self.width = width
+    def __init__(self):
+        self.width = WIDTH
         player_board = self.make_board_forced()
         computer_board = self.make_board_forced()
         computer_board.hidden = True
@@ -32,8 +43,8 @@ class MainGameObject:
         self.ai = AI(computer_board, player_board)
         self.user = Human(player_board, computer_board)
 
-    def make_board(self):  # TODO Make ship lengths changeable
-        lengths = [3, 2, 2, 1, 1, 1, 1]
+    def make_board(self):
+        lengths = SHIP_LIST
         board = GameField()
         attempt_count = 0
         for taken_length in lengths:
@@ -58,17 +69,6 @@ class MainGameObject:
             board = self.make_board()
         return board
 
-    def rules(self):
-        print('Welcome to the Battleships game!')
-        print('--------------------------------------')
-        print('The rules are standard.')
-        print('Input X and Y coordinates for shoot.')
-        print("Try to hit all opponent's ships on map")
-        print('before opponent destroy all yours.')
-        print('Your opponent will be simple AI.')
-        print('--------------------------------------')
-        print('Good luck!')
-
     def party_cycle(self):
         move = 0
         while True:
@@ -83,7 +83,7 @@ class MainGameObject:
                 print('User move:')
                 new_shot = self.user.move()
             else:
-                print('Computer move:')
+                print('Computer move:', end='')
                 new_shot = self.ai.move()
             if not new_shot:
                 move -= 1  # For same player move when get hit
@@ -99,7 +99,7 @@ class MainGameObject:
                 break
 
     def open_game(self):
-        self.rules()
+        rules()
         self.party_cycle()
 
 

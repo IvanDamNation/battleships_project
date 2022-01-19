@@ -1,7 +1,7 @@
 # Config file for game options
 
 # Field width
-WIDTH = 6
+WIDTH = 7
 
 # Ships settings
 # Each number - ship on field

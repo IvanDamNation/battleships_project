@@ -1,6 +1,7 @@
 # File contains objects definition for Battleships game
 
 from random import randint  # For AI moves
+from options import *
 
 
 # Exceptions section
@@ -72,13 +73,13 @@ class Ship:
 
 # Object for board presentation
 class GameField:
-    def __init__(self, hidden=False, width=6):
-        self.width = width
+    def __init__(self, hidden=False):
+        self.width = WIDTH
         self.hidden = hidden
 
         self.destroyed = 0  # Ship counter
 
-        self.field_itself = [[' '] * width for _ in range(width)]
+        self.field_itself = [[' '] * WIDTH for _ in range(WIDTH)]
 
         self.used_dots = []
         self.ships_on_field = []
@@ -143,7 +144,7 @@ class GameField:
                     self.destroyed += 1
                     self.occupy_dots(ship, verbose=True)
                     print('Ship destroyed!')
-                    return False
+                    return True
                 else:
                     print('Ship get hit!')
                     return True
@@ -180,8 +181,8 @@ class PlayerMain:
         return new_shot
 
 
-class Human(PlayerMain):  # TODO Make width changeable
-    def get_coord(self, width=6):
+class Human(PlayerMain):
+    def get_coord(self):
         coord_x = coord_y = None
         acceptable = False
 
@@ -197,10 +198,10 @@ class Human(PlayerMain):  # TODO Make width changeable
         return Dot(coord_x, coord_y)
 
 
-class AI(PlayerMain):  # TODO Make width changeable
-    def get_coord(self, width=5):
-        dot = Dot(randint(0, width), randint(0, width))
-        print(f'Computer move: x={dot.x} y={dot.y}', end='')
-        input('Press Enter.')
+class AI(PlayerMain):
+    def get_coord(self):
+        dot = Dot(randint(0, WIDTH - 1), randint(0, WIDTH - 1))
+        print(f' x={dot.x} y={dot.y}')
+        input('Press Enter to continue.')
 
         return dot
