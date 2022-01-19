@@ -1,14 +1,13 @@
-# battleships_project
+# Battleships The game
 
-Making basic console version of battleships game.
+Features:
+1. Classic game rules;
+2. Gameplay in Python Console;
+3. Computer AI for opponent (just random for now);
+4. Changeable game field;
+5. Changeable length and amount of ships on field;
+6. Separate options file for fast and simple changes.
 
-Work in progress.
-
-Features will add later
-
-This is a main file of "Battleships" game.
-#Gameplay in Python Console only (for now).
-'AI' is primitive (just random)
 
 Made for final practice exercise in chapter
 "OOP" for SkillFactory
