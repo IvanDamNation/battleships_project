@@ -17,7 +17,7 @@ from random import randint
 from game_objects import WrongShipPlacement
 from game_objects import Dot, Ship, GameField, Human, AI
 
-# For more options info look in "options.py" file
+# For configuration info look in "options.py" file
 from options import *
 
 
@@ -38,7 +38,7 @@ class MainGameObject:
         self.width = WIDTH
         player_board = self.make_board_forced()
         computer_board = self.make_board_forced()
-        computer_board.hidden = True
+        computer_board.hidden = CHEAT_DISABLE
 
         self.ai = AI(computer_board, player_board)
         self.user = Human(player_board, computer_board)
@@ -71,7 +71,8 @@ class MainGameObject:
 
     def party_cycle(self):
         move = 0
-        while True:
+        finished = False
+        while not finished:
             print('-' * 20)
             print('User board.')
             print(self.user.board)
@@ -91,12 +92,12 @@ class MainGameObject:
             if self.ai.board.destroyed == 7:
                 print('-' * 20)
                 print('You win!')
-                break
+                finished = True
 
             if self.user.board.destroyed == 7:
                 print('-' * 20)
                 print('Computer win!')
-                break
+                finished = True
 
     def open_game(self):
         rules()
@@ -107,4 +108,4 @@ class MainGameObject:
 if __name__ == '__main__':
     game = MainGameObject()
     game.open_game()
-    # print(game.make_board_forced())
+    # print(game.make_board_forced())  # For debug
